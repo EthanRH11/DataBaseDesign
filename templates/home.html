@@ -1,0 +1,23 @@
+<!-- This will be the home main page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Second Hand | Home </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<!-- Nav Bar -->
+<nav class="navbar">
+    <!-- Link to shop page -->
+    <a href="{{ url_for('shop') }}">Shop</a>
+    <!-- Link to Login page -->
+    <a href="{{ url_for('shop') }}">Login</a>
+</nav>
+
+<body>
+    <h1 class="text">Welcome to the Home Page!</h1>
+    <p>This is the homepage of our site.</p>
+
+</body>
+</html>
