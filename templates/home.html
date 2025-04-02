@@ -4,19 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Second Hand | Home </title>
+    <title>Home Page</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<!-- Nav Bar -->
-<nav class="navbar">
-    <!-- Link to shop page -->
-    <a href="{{ url_for('shop') }}">Shop</a>
-    <!-- Link to Login page -->
-    <a href="{{ url_for('shop') }}">Login</a>
-</nav>
+<body class="bod">
+    <!-- Navbar Section -->
+    <nav class="navBar">
+        <ul>
+                <!-- Link to *Home* page -->
+            <li><a href="{{ url_for('home') }}">Home</a></li>
 
-<body>
-    <h1 class="text">Welcome to the Home Page!</h1>
+            <img clas="logo" src="{{ url_for('static', filename='assets/Watch.png') }}" alt="Logo">
+
+                <!-- Link to *Shop* page -->
+            <li><a href="{{ url_for('shop') }}">Shop</a></li>
+        </ul>
+    </nav>
+
+    <h1>Welcome to the Home Page!</h1>
     <p>This is the homepage of our site.</p>
 
 </body>
