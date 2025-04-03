@@ -18,7 +18,7 @@ def login():
     return render_template("log.html")
 
 @app.route("/repairs")
-def login():
+def repairs():
     return render_template("repair.html")
 
 if __name__ == "__main__":
