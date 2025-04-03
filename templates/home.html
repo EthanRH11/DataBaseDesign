@@ -4,20 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Second Hand | Home </title>
+    <link rel="icon" type="image/svg+xml" href="/static/assets/Watch.png" />
+    <title>Home Page</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='app.js') }}"></script>
 </head>
-<!-- Nav Bar -->
-<nav class="navbar">
-    <!-- Link to shop page -->
-    <a href="{{ url_for('shop') }}">Shop</a>
-    <!-- Link to Login page -->
-    <a href="{{ url_for('shop') }}">Login</a>
-</nav>
-
 <body>
-    <h1 class="text">Welcome to the Home Page!</h1>
-    <p>This is the homepage of our site.</p>
+    <!-- Navbar Section -->
+    <nav class="navBar">
+        <div class="left-items">
+            <ul>
+                <img class="logo" src="{{ url_for('static', filename='assets/Watch.png') }}" alt="Logo">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('shop') }}">Shop</a></li>
+                <li><a href="{{ url_for('repairs') }}">Repairs</a></li>
+            </ul>
+        </div>
+        <div class="right-items">
+            <a href="{{ url_for('login') }}" class="login">Login</a>
+        </div>
+    </nav>
 
+    <!-- Background Video (Blur only, no slide-in) -->
+    <video autoplay loop muted plays-inline class="back-vid">
+        <source src="{{ url_for('static', filename='assets/8322341-uhd_4096_2160_25fps.mp4') }}" type="video/mp4">
+    </video>
+
+
+    <section class="hidden">
+        <h1>The Second Hand Watch Company</h1>
+    </section>  
+
+    <section class="hidden">
+        <p>This is the homepage of our site.</p>
+    </section>
 </body>
 </html>

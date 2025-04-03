@@ -13,5 +13,13 @@ def home():
 def shop():
     return render_template("shop.html")
 
+@app.route("/login")
+def login():
+    return render_template("log.html")
+
+@app.route("/repairs")
+def login():
+    return render_template("repair.html")
+
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
