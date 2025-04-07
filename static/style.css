@@ -98,27 +98,37 @@ section h1 {
 
 section h3 {
     font-size: 30px;
-    padding-top: 500px;
-    top: 0;
     color: whitesmoke;
     text-shadow: 2px 2px 5px black, -2px -2px 5px black;
 }
 
-section button {
-    font-family: Fancy2;
-    height: 200px;
-    width: 35%;
-    border-radius: 30px;
-    font-size: 25px;
+.button-group {
+    font-family: Fancy;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; 
+    width: 100%;
+    height: 100px;
     transition: 0.2s ease-in-out;
 }
 
-section button:hover {
-    background-color: #2b2b2b;
-    color: black; 
+.button-group button {
+    font-family: Fancy;
+    font-size: medium;
+    width: 300px;
+    height: 100px;
     transition: 0.2s ease-in-out;
-    font-size: 30px;
-    text-shadow: #222, 12px;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+}
+
+.button-group button:hover {
+    color: #2b2b2b;
+    font-size: large;
+    background-color: #bdbcbc;
+    transition: 0.2s ease-in-out;
     cursor: pointer;
 }
 
