@@ -1,1 +1,4 @@
 # Git ignore file
+venv/
+.venv/
+__pycache__/
