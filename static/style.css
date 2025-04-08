@@ -4,6 +4,10 @@
     src: url(assets/GFSDidot.otf);
 }
 
+html {
+    background-color: #2f2f2f;
+}
+
 @font-face {
     font-family: 'Fancy2';
     src: url(assets/HenriDidot.otf);
@@ -87,7 +91,7 @@ section {
     display: grid;
     place-items: center;
     align-content: center;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 section h1 {
@@ -100,6 +104,13 @@ section h3 {
     font-size: 30px;
     color: whitesmoke;
     text-shadow: 2px 2px 5px black, -2px -2px 5px black;
+}
+
+section h4 {
+    font-size: 30px;
+    color: whitesmoke;
+    margin-top: -345px;
+    text-shadow: 2px 2px 5px rgb(12, 12, 12), -2px -2px 5px black;
 }
 
 .button-group {
@@ -117,11 +128,23 @@ section h3 {
 
 .button-group button {
     font-family: Fancy;
-    font-size: medium;
-    width: 300px;
-    height: 100px;
-    transition: 0.2s ease-in-out;
+    font-size: large;
+    width: 200px;
+    height: 40px;
+    transition: 0.1s ease-in-out;
     box-shadow: 0 0 2px #222, 0 0 5px #222;
+    margin-bottom: -250px;
+    background-color: #e8e8e8;
+}
+
+.button-group button:active {
+    font-family: Fancy;
+    font-size: medium;
+    width: 201px;
+    height: 41px;
+    transition: 0.1s ease-in-out;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+    background-color: #3c3c3c;
 }
 
 .button-group button:hover {
@@ -130,6 +153,18 @@ section h3 {
     background-color: #bdbcbc;
     transition: 0.2s ease-in-out;
     cursor: pointer;
+}
+
+input {
+    font-family: Fancy;
+    width: 75%;
+    height: 35px;
+    font-size: large;
+    border-radius: 2px;
+    border-style: double;
+    text-align: left;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+    margin-top: -300px;
 }
 
 .hidden {
@@ -176,3 +211,13 @@ section h3 {
     margin-left: -15px;
     padding-right: 23px;
 }
+
+.container {
+    background-color: #f4f4f4;
+    width: 40%;
+    height: 400px;
+    border-radius: 5px;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+
+}
+
