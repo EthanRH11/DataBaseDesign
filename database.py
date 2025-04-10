@@ -124,4 +124,29 @@ class Database:
                 pass
             return False, error_msg
         
-    
+    def add_employee(self, employee_id, first_name, last_name, role, company_id):
+        conn = self.connect()
+        if conn is None:
+            return False, "Database connection failed"
+
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                INSERT INTO ehicks12.Employee (EmployeeID, FirstName, LastName, Role, CompanyID)
+                VALUES (%s, %s, %s, %s, %s)
+                """
+                cursor.execute(query, (employee_id, first_name, last_name, role, company_id))
+                conn.commit()
+                return True, "Employee account created successfully"
+        except pymysql.MySQLError as e:
+            error_msg = str(e)
+            print(f"Error adding employee: {error_msg}")
+
+            try:
+                conn.rollback()
+            except:
+                pass
+
+            if "Duplicate entry" in error_msg and "PRIMARY" in error_msg:
+                error_msg = f"Employee ID '{employee_id}' already exists"
+            return False, error_msg
