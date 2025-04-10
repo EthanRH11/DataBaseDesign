@@ -21,5 +21,9 @@ def login():
 def repairs():
     return render_template("repair.html")
 
+@app.route("/sign")
+def sign():
+    return render_template("sign.html")
+
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
