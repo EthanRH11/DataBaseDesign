@@ -109,30 +109,29 @@ section h3 {
 section h4 {
     font-size: 30px;
     color: whitesmoke;
-    margin-top: -330px;
     text-shadow: 2px 2px 5px rgb(12, 12, 12), -2px -2px 5px black;
     margin-left: 35px;
 }
 
 section p {
     font-size: 25px;
-    color: rgb(54, 54, 54);
-    margin-top: -100px;
-    text-shadow: 2px 2px 5px rgb(255, 255, 255), -2px -2px 5px rgb(255, 255, 255);
+    color: whitesmoke;
+    text-shadow: 2px 2px 5px rgb(12, 12, 12), -2px -2px 5px black;
+    margin-bottom: 1px;
 }
 
+.signText section p {
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+    margin-top: -100px;
+    text-shadow: 2px 2px 5px rgb(12, 12, 12), -2px -2px 5px black;
+}
 
 .button-group {
-    font-family: Fancy;
     display: flex;
-    flex-direction: row;
-    gap: 40px;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    flex-wrap: wrap; 
-    width: 100%;
-    height: 100px;
-    transition: 0.2s ease-in-out;
+    gap: 10px;
 }
 
 .button-group button {
@@ -173,7 +172,19 @@ input {
     border-style: double;
     text-align: left;
     box-shadow: 0 0 2px #222, 0 0 5px #222;
-    margin-top: -50px;
+}
+
+select {
+    align-self: center;
+    font-family: Fancy;
+    width: 75%;
+    height: 35px;
+    font-size: large;
+    border-radius: 2px;
+    border-style: double;
+    text-align: left;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+    padding-left: 5px;
 }
 
 .hidden {
@@ -228,5 +239,80 @@ input {
     border-radius: 5px;
     box-shadow: 0 0 2px #222, 0 0 5px #222;
 
+}
+
+.containerLog {
+    background-color: #f4f4f4;
+    width: 40%;
+    height: 750px;
+    border-radius: 5px;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+}
+
+/* For forms */
+
+.containerSign {
+    background-color: #f4f4f4;
+    width: 40%;
+    padding: 40px 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formLayout {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.formLayout h4 {
+    font-size: 30px;
+    color: #2b2b2b;
+    text-shadow: 1px 1px 3px #999;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.formLayout label {
+    font-family: Fancy;
+    font-size: 18px;
+    color: #2b2b2b;
+}
+
+.formLayout input {
+    font-family: Fancy;
+    font-size: 16px;
+    padding: 8px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #999;
+    box-shadow: 0 0 2px #222;
+}
+
+.formLayout button {
+    font-family: Fancy;
+    font-size: large;
+    width: 100%;
+    height: 40px;
+    background-color: #e8e8e8;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.formLayout button:hover {
+    background-color: #bdbcbc;
+    color: #2b2b2b;
+}
+
+.status-msg {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 16px;
+    color: red;
+    font-weight: bold;
 }
 
