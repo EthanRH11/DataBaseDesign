@@ -109,9 +109,18 @@ section h3 {
 section h4 {
     font-size: 30px;
     color: whitesmoke;
-    margin-top: -345px;
+    margin-top: -330px;
     text-shadow: 2px 2px 5px rgb(12, 12, 12), -2px -2px 5px black;
+    margin-left: 35px;
 }
+
+section p {
+    font-size: 25px;
+    color: rgb(54, 54, 54);
+    margin-top: -100px;
+    text-shadow: 2px 2px 5px rgb(255, 255, 255), -2px -2px 5px rgb(255, 255, 255);
+}
+
 
 .button-group {
     font-family: Fancy;
@@ -133,7 +142,6 @@ section h4 {
     height: 40px;
     transition: 0.1s ease-in-out;
     box-shadow: 0 0 2px #222, 0 0 5px #222;
-    margin-bottom: -250px;
     background-color: #e8e8e8;
 }
 
@@ -156,6 +164,7 @@ section h4 {
 }
 
 input {
+    align-self: center;
     font-family: Fancy;
     width: 75%;
     height: 35px;
@@ -164,7 +173,7 @@ input {
     border-style: double;
     text-align: left;
     box-shadow: 0 0 2px #222, 0 0 5px #222;
-    margin-top: -300px;
+    margin-top: -50px;
 }
 
 .hidden {
