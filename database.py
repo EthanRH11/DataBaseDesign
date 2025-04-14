@@ -14,6 +14,7 @@ class Database:
         """Connect to the database and return a connection object."""
         try:
             if self.connection is None:
+                print(f"Attempting to connect to {self.host} as user {self.user}...")
                 self.connection = pymysql.connect(
                     host=self.host,
                     user=self.user,
@@ -22,6 +23,7 @@ class Database:
                     charset='utf8mb4',
                     cursorclass=pymysql.cursors.DictCursor
                 )
+                print("Connection Successful!")
             return self.connection
         except pymysql.MySQLError as e:
             print(f"Error connecting to the database: {e}")
@@ -110,6 +112,8 @@ class Database:
                 INSERT INTO ehicks12.customer (CustomerID, FirstName, LastName, email, number)
                 VALUE (%s, %s, %s, %s, %s)
                 """
+                cursor.execute(query, (CustomerID, FirstName, LastName, email, number))
+                conn.commit()
                 return True, "Student added successfully"
         except pymysql.MySQLError as e:
             error_msg = str(e)
@@ -150,3 +154,101 @@ class Database:
             if "Duplicate entry" in error_msg and "PRIMARY" in error_msg:
                 error_msg = f"Employee ID '{employee_id}' already exists"
             return False, error_msg
+        
+    def list_all_employees(self):
+        conn = self.connect()
+        if conn is None:
+            return []
+        
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                Select EmployeeID, FirstName, LastName, Role, CompanyID
+                From ehicks12.Employee
+                ORDER BY LastName
+                """
+                cursor.execute(query)
+                return cursor.fetchall()
+        except pymysql.MySQLError as e:
+            print(f"Error getting employees: {e}")
+            return []
+    
+    def fetch_employee_by_ID(self, id_part):
+        conn = self.connect()
+        if conn is None:
+            return []
+        
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                SELECT * FROM ehicks12.Employee
+                WHERE EmployeeID LIKE %s
+                """
+                cursor.execute(query, (f'%{id_part}%'))
+                results = cursor.fetchall()
+        except pymysql.MySQLError as e:
+            error_msg = str(e)
+            print(f"Error searching Employees by ID: {error_msg}")
+            return []
+        
+    def employee_search_by_role(self, role_part):
+        conn = self.connect()
+        if conn is None:
+            return False
+        
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                SELECT EmployeeID, FirstName, LastName, Role, CompanyID
+                FROM ehicks12.Employee
+                WHERE Role = %s
+                """
+                cursor.execute(query, (role_part,))
+                results = cursor.fetchall()
+                return results
+        except pymysql.MySQLError as e:
+            error_msg = str(e)
+            print(f"Error searching employee by role: {error_msg}")
+            return []
+        
+    def get_watch_repairs_by_status(self, status):
+        conn = self.connect()
+        if conn is None:
+            return []
+    
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                SELECT c.CustomerID, c.FirstName, c.LastName, c.number, wr.RepairID, wr.status 
+                FROM ehicks12.Customer AS c 
+                INNER JOIN ehicks12.WatchRepair AS wr 
+                ON c.CustomerID = wr.CustomerID 
+                WHERE wr.status = %s
+                """
+            cursor.execute(query, (status,))
+            return cursor.fetchall()
+        except pymysql.MySQLError as e:
+            error_msg = str(e)
+            print(f"Error getting repairs by status: {error_msg}")
+            return []
+        
+    def get_completed_watch_repairs(self):
+        conn = self.connect()
+        if conn is None:
+            return []
+    
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                SELECT c.CustomerID, c.FirstName, c.LastName, c.number, wr.RepairID, wr.status 
+                FROM ehicks12.Customer AS c 
+                INNER JOIN ehicks12.WatchRepair AS wr 
+                ON c.CustomerID = wr.CustomerID 
+                WHERE wr.status = 'complete'
+                """
+            cursor.execute(query)
+            return cursor.fetchall()
+        except pymysql.MySQLError as e:
+            error_msg = str(e)
+            print(f"Error getting customers with completed repairs: {error_msg}")
+            return []
