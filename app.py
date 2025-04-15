@@ -27,6 +27,11 @@ def repairs():
 
     return render_template("repair.html", repairs=repairs_data, selected_status=status)
 
+@app.route("/employee")
+def employee():
+    employees = db.list_all_employees()
+    return render_template("employee.html", employees=employees)
+
 @app.route("/sign", methods=["GET", "POST"])
 def sign():
     if request.method == "POST":
