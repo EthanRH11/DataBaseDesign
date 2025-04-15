@@ -21,7 +21,11 @@ def login():
 
 @app.route("/repairs")
 def repairs():
-    return render_template("repair.html")
+    status = request.args.get('status', 'in progress')
+
+    repairs_data = db.get_watch_repairs_by_status(status)
+
+    return render_template("repair.html", repairs=repairs_data, selected_status=status)
 
 @app.route("/sign", methods=["GET", "POST"])
 def sign():
