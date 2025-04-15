@@ -3,13 +3,13 @@ import pymysql
 class Database:
 
     def __init__(self, host='dbdev.cs.kent.edu', user='ehicks12',
-                 password='7Yg2Zisd', db='ehicks12'):
+                 password='\', db='ehicks12'):
         self.host = host
         self.user = user
         self.password = password
         self.db = db
         self.connection = None
-
+        
     def connect(self):
         """Connect to the database and return a connection object."""
         try:
