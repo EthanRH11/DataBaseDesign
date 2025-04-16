@@ -9,7 +9,7 @@ class Database:
         self.password = password
         self.db = db
         self.connection = None
-
+        
     def connect(self):
         """Connect to the database and return a connection object."""
         try:
