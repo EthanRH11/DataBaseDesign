@@ -316,3 +316,32 @@ select {
     font-weight: bold;
 }
 
+/* Employee table style */
+.employee-table {
+    width: 80%;
+    margin: 2rem auto;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.9); /* light glass effect */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Segoe UI', sans-serif;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.employee-table thead {
+    background-color: #333;
+    color: #fff;
+}
+
+.employee-table th,
+.employee-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.employee-table tr:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
+}
+

@@ -252,3 +252,53 @@ class Database:
             error_msg = str(e)
             print(f"Error getting customers with completed repairs: {error_msg}")
             return []
+        
+    def get_Watch_by_ID(self, watchID):
+        conn = self.connect()
+        if conn is None:
+            return []
+        
+        try:
+            with conn.cursor as cursor:
+                query="""
+                SELECT WatchID, Model, Description, Price, Type
+                FROM ehicks12.CompleteWatch
+                WHERE WatchID = %s
+                """
+                cursor.execute(query, (watchID,))
+                result = cursor.fetchone()
+                return result
+        except pymysql.MySQLError as e:
+            error_msg = str(e)
+            print(f"Error getting watch by ID: {error_msg}")
+            return None
+        
+    def get_Watch_By_Price(self, price=None):
+        conn = self.connect()
+        if conn is None:
+            return []
+        
+        try:
+            with conn.cursor() as cursor:
+                if price is not None:
+                    query="""
+                    SELECT WatchID, Model, Description, Price, Type
+                    FROM ehicks12.CompleteWatch
+                    WHERE Price <= %s
+                    ORDER BY Price ASC
+                    """
+                    cursor.execute(query, (price,))
+                else:
+                    query = """
+                    SELECT WatchID, Model, Description, Price, Type
+                    FROM ehicks12.CompleteWatch
+                    ORDER BY Price ASC
+                    """
+                    cursor.execute(query)
+                
+                result = cursor.fetchall()
+                return result
+        except pymysql.MySQLError as e:
+            error_msg = str(e)
+            print(f"Error getting watches by price: {error_msg}")
+            return []
