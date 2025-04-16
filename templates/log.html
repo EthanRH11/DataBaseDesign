@@ -37,6 +37,9 @@
                 <p>Employee ID:</p>
                 <input></input>
                 <button>Login</button>
+                {% if message %}
+                    <p class="status-msg">{{ message }}</p>
+                {% endif %}
                 <a href="{{ url_for('sign') }}"><button>Sign Up</button></a>
                 
             </div>
