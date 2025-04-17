@@ -345,3 +345,21 @@ select {
     transition: background-color 0.3s ease;
 }
 
+.center-form-log {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.center-form-log label,
+.center-form-log input,
+.center-form-log button,
+.center-form-log a {
+    width: 100%;
+    text-align: center;
+}

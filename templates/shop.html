@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="/static/assets/Watch.png" />
-    <title>Home Page</title>
+    <title>Shop</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script defer src="{{ url_for('static', filename='app.js') }}"></script>
 </head>
@@ -22,7 +22,11 @@
             </ul>
         </div>
         <div class="right-items">
-            <a href="{{ url_for('login') }}" class="login">Login</a>
+            {% if session.get("employee_id") %}
+                <a href="{{ url_for('login') }}" class="login">{{ session["employee_id"] }}</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="login">Login</a>
+            {% endif %}
         </div>
     </nav>
 
