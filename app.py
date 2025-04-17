@@ -69,5 +69,26 @@ def sign():
 
     return render_template("sign.html")
 
+#date adding works, show all events, and active events no
+@app.route("/events", methods=["GET", "POST"])
+def events():
+    if request.method == "POST":
+        event_id = request.form["event_id"]
+        name = request.form["name"]
+        start_date = request.form["start_date"]
+        end_date = request.form["end_date"]
+        discount_percent = request.form["discount_percent"]
+        
+        success, message = db.add_event(event_id, name, start_date, end_date, discount_percent)
+        
+        events_data = db.list_all_events()
+        active_events = db.get_active_events()
+        return render_template("events.html", events=events_data, active_events=active_events, message=message)
+    
+    else: 
+        events_data = db.list_all_events()
+        active_events = db.get_active_events()
+        return render_template("events.html", events=events_data, active_events=active_events)
+    
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
