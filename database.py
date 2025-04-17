@@ -190,6 +190,7 @@ class Database:
             error_msg = str(e)
             print(f"Error searching Employees by ID: {error_msg}")
             return []
+        return results
         
     def employee_search_by_role(self, role_part):
         conn = self.connect()

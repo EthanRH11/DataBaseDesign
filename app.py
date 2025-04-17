@@ -1,10 +1,11 @@
 #Database System Design
 #The Second Hand Watch Company
 #Anthony Cruz, Ethan Hicks, Kent Ogasawara, Brandon Angell
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from database import Database
 
 app= Flask(__name__)
+app.secret_key = "dev_key"
 db = Database()
 
 @app.route("/")
@@ -15,8 +16,24 @@ def home():
 def shop():
     return render_template("shop.html")
 
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        employee_id = request.form["employee_id"]
+        employee = db.fetch_employee_by_ID(employee_id)
+
+        if employee: 
+            employee_data = employee[0]
+            session["employee_id"] = employee_id
+            session["first_name"] = employee_data["FirstName"]
+            
+            # Debugging output to verify session data
+            print(f"Session data after login: {session}")
+            
+            return redirect(url_for("home"))
+        else:
+            return render_template("log.html", message="Invalid Employee ID")
+
     return render_template("log.html")
 
 @app.route("/repairs")
