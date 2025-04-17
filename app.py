@@ -49,6 +49,12 @@ def employee():
     employees = db.list_all_employees()
     return render_template("employee.html", employees=employees)
 
+@app.route("/customer")
+def customer():
+    customers = db.listAllCustomers()
+    return render_template("customer.html", customers=customers)
+
+
 @app.route("/sign", methods=["GET", "POST"])
 def sign():
     if request.method == "POST":
