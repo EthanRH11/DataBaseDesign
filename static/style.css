@@ -1,0 +1,365 @@
+/* Fancy ah ah Font */
+@font-face {
+    font-family: 'Fancy';
+    src: url(assets/GFSDidot.otf);
+}
+
+html {
+    background-color: #2f2f2f;
+}
+
+@font-face {
+    font-family: 'Fancy2';
+    src: url(assets/HenriDidot.otf);
+}
+
+/* Navbar styles */
+.navBar {
+    background-color: #2b2b2b;
+    border-bottom: thick solid #2b2b2b; 
+    font-size: 20px;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+    transition: 0.2s ease-in-out;
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    justify-content: space-between; /* Space between the elements */
+}
+
+.navBar ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    justify-content: center; /* Center the items */
+    flex-grow: 1;
+}
+
+.navBar li {
+    margin: 0 15px; 
+    margin-top: 25px;
+    transition: 0.2s ease-in-out;
+}
+
+.navBar .login {
+    margin-left: auto; /* Push the login button to the right */
+}
+
+.navBar a {
+    font-family: Fancy2;
+    font-size: 25px;
+    text-decoration: none; 
+    color: whitesmoke; 
+    padding: 10px 15px; 
+    display: inline-block;
+    transition: 0.2s ease-in-out;
+}
+
+.navBar a:hover {
+    background-color: #2b2b2b;
+    color: black; 
+    border-radius: 5px; 
+    transition: 0.2s ease-in-out;
+    font-size: 30px;
+    text-shadow: #222, 12px;
+}
+
+.navBar img {
+    z-index: 3;
+    width: 90px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+/* Body Styles */
+.bod {
+    background-color: #f4f4f4;
+    color: #222;
+    width: 100%;
+    min-height: 100vh; 
+    padding-top: 70px; 
+}
+
+/* Fancy Javascript Stuff */
+section {
+    font-family: Fancy;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    height: 100vh;
+}
+
+section h1 {
+    font-size: 60px;
+    color: whitesmoke;
+    text-shadow: 2px 2px 5px black, -2px -2px 5px black;
+}
+
+section h3 {
+    font-size: 30px;
+    color: whitesmoke;
+    text-shadow: 2px 2px 5px black, -2px -2px 5px black;
+}
+
+section h4 {
+    font-size: 30px;
+    color: whitesmoke;
+    text-shadow: 2px 2px 5px rgb(12, 12, 12), -2px -2px 5px black;
+    margin-left: 35px;
+}
+
+section p {
+    font-size: 25px;
+    color: whitesmoke;
+    text-shadow: 2px 2px 5px rgb(12, 12, 12), -2px -2px 5px black;
+    margin-bottom: 1px;
+}
+
+.signText section p {
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+    margin-top: -100px;
+    text-shadow: 2px 2px 5px rgb(12, 12, 12), -2px -2px 5px black;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.button-group button {
+    font-family: Fancy;
+    font-size: large;
+    width: 200px;
+    height: 40px;
+    transition: 0.1s ease-in-out;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+    background-color: #e8e8e8;
+}
+
+.button-group button:active {
+    font-family: Fancy;
+    font-size: medium;
+    width: 201px;
+    height: 41px;
+    transition: 0.1s ease-in-out;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+    background-color: #3c3c3c;
+}
+
+.button-group button:hover {
+    color: #2b2b2b;
+    font-size: large;
+    background-color: #bdbcbc;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+input {
+    align-self: center;
+    font-family: Fancy;
+    width: 75%;
+    height: 35px;
+    font-size: large;
+    border-radius: 2px;
+    border-style: double;
+    text-align: left;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+}
+
+select {
+    align-self: center;
+    font-family: Fancy;
+    width: 75%;
+    height: 35px;
+    font-size: large;
+    border-radius: 2px;
+    border-style: double;
+    text-align: left;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+    padding-left: 5px;
+}
+
+.hidden {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(-100%);
+    transition: all 1s;
+}
+
+.show {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0); 
+}
+
+.back-vid {
+    position: absolute;
+    left: 0;
+    filter: blur(0px);
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+@media (min-aspect-ratio: 20/9) {
+    .back-vid {
+        width: 100vm;
+        height: auto;
+        object-fit: cover;
+    }
+}
+
+/* For the Section dividers */
+.divide {
+    background-color: #2b2b2b;
+    width: 100%;
+    height: 50px;
+    padding-bottom: -20px;
+    left: 0;
+    transform: translateY(-25px);
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+    margin-left: -15px;
+    padding-right: 23px;
+}
+
+.container {
+    background-color: #f4f4f4;
+    width: 40%;
+    height: 400px;
+    border-radius: 5px;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+
+}
+
+.containerLog {
+    background-color: #f4f4f4;
+    width: 40%;
+    height: 750px;
+    border-radius: 5px;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+}
+
+/* For forms */
+
+.containerSign {
+    background-color: #f4f4f4;
+    width: 40%;
+    padding: 40px 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formLayout {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.formLayout h4 {
+    font-size: 30px;
+    color: #2b2b2b;
+    text-shadow: 1px 1px 3px #999;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.formLayout label {
+    font-family: Fancy;
+    font-size: 18px;
+    color: #2b2b2b;
+}
+
+.formLayout input {
+    font-family: Fancy;
+    font-size: 16px;
+    padding: 8px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #999;
+    box-shadow: 0 0 2px #222;
+}
+
+.formLayout button {
+    font-family: Fancy;
+    font-size: large;
+    width: 100%;
+    height: 40px;
+    background-color: #e8e8e8;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.formLayout button:hover {
+    background-color: #bdbcbc;
+    color: #2b2b2b;
+}
+
+.status-msg {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 16px;
+    color: red;
+    font-weight: bold;
+}
+
+/* Employee table style */
+.employee-table {
+    width: 80%;
+    margin: 2rem auto;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.9); /* light glass effect */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Segoe UI', sans-serif;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.employee-table thead {
+    background-color: #333;
+    color: #fff;
+}
+
+.employee-table th,
+.employee-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.employee-table tr:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
+}
+
+.center-form-log {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.center-form-log label,
+.center-form-log input,
+.center-form-log button,
+.center-form-log a {
+    width: 100%;
+    text-align: center;
+}
