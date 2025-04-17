@@ -1,0 +1,69 @@
+<!-- This will be the home main page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/static/assets/Watch.png" />
+    <title>Our Customers</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body>
+    <!-- Navbar Section -->
+    <nav class="navBar">
+        <div class="left-items">
+            <ul>
+                <img class="logo" src="{{ url_for('static', filename='assets/Watch.png') }}" alt="Logo">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('shop') }}">Parts Shop</a></li>
+                <li><a href="{{ url_for('repairs') }}">Repairs</a></li>
+                <li><a href="{{ url_for('customer') }}">Customers</a></li>
+                <li><a href="{{ url_for('employee') }}">Employees</a></li>
+            </ul>
+        </div>
+        <div class="right-items">
+            <a href="{{ url_for('login') }}" class="login">Login</a>
+        </div>
+    </nav>
+
+    <!-- Background Video (Blur only, no slide-in) -->
+    <video autoplay loop muted plays-inline class="back-vid">
+        <source src="{{ url_for('static', filename='assets/1034067-hd_1920_1080_25fps.mp4') }}" type="video/mp4">
+    </video>
+
+    <section class="hidden">
+        <h1>Customers</h1>
+    </section>  
+
+    <div>
+        <nav class="divide"> <p>.</p> </nav>
+    </div>
+
+    <section class="hidden">
+        <p>Our Customers</p>
+        <table class="employee-table">
+            <thead>
+                <tr>
+                    <th>CustomerID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                    <tr>
+                        <td>{{ customer['CustomerID'] }}</td>
+                        <td>{{ customer['FirstName'] }}</td>
+                        <td>{{ customer['LastName'] }}</td>
+                        <td>{{ customer['email'] }}</td>
+                        <td>{{ customer['number'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>            
+        </table>
+    </section>
+</body>
+</html>
