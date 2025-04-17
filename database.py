@@ -303,3 +303,69 @@ class Database:
             error_msg = str(e)
             print(f"Error getting watches by price: {error_msg}")
             return []
+
+        
+
+    def add_event(self, event_id, name, start_date, end_date, discount_percent):
+        conn = self.connect()
+        if conn is None:
+            return False, "Database connection failed"
+
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                INSERT INTO ehicks12.SaleEvent (EventID, Name, startDate, endDate, discountPercent)
+                VALUES (%s, %s, %s, %s, %s)
+                """
+                cursor.execute(query, (event_id, name, start_date, end_date, discount_percent))
+                conn.commit()
+                return True, "Sale event added successfully"
+        except pymysql.MySQLError as e:
+            error_msg = str(e)
+            print(f"Error adding sale event: {error_msg}")
+
+        try:
+            conn.rollback()
+        except:
+            pass
+
+        if "Duplicate entry" in error_msg and "PRIMARY" in error_msg:
+            error_msg = f"Event ID '{event_id}' already exists"
+            return False, error_msg
+
+    def list_all_events(self):
+        conn = self.connect()
+        if conn is None:
+            return []
+    
+        try:
+            with conn.cursor() as cursor:
+                query = """
+            SELECT EventID, Name, startDate, endDate, discountPercent
+            FROM ehicks12.SaleEvent
+            ORDER BY startDate
+            """
+            cursor.execute(query)
+            return cursor.fetchall()
+        except pymysql.MySQLError as e:
+            print(f"Error getting sale events: {e}")
+            return []
+        
+    def get_active_events(self):
+        conn = self.connect()
+        if conn is None:
+            return []
+    
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                SELECT EventID, Name, startDate, endDate, discountPercent
+                FROM ehicks12.SaleEvent
+                WHERE CURDATE() BETWEEN startDate AND endDate
+                ORDER BY discountPercent DESC
+                """
+                cursor.execute(query)
+                return cursor.fetchall()
+        except pymysql.MySQLError as e:
+            print(f"Error getting active sale events: {e}")
+            return []

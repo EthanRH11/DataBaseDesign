@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/static/assets/Watch.png" />
+    <title>Sales Events</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body>
+    <!-- Navbar Section -->
+    <nav class="navBar">
+        <div class="left-items">
+            <ul>
+                <img class="logo" src="{{ url_for('static', filename='assets/Watch.png') }}" alt="Logo">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('shop') }}">Parts Shop</a></li>
+                <li><a href="{{ url_for('repairs') }}">Repairs</a></li>
+                <li><a href="{{ url_for('employee') }}">Employees</a></li>
+                <li><a href="{{ url_for('events') }}">Sales Events</a></li>
+            </ul>
+        </div>
+        <div class="right-items">
+            {% if session.get("employee_id") %}
+                <a href="{{ url_for('login') }}" class="login">{{ session["employee_id"] }}</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="login">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <section>
+        <h1>Sales Events Management</h1>
+        
+        {% if message %}
+        <div>
+            {{ message }}
+        </div>
+        {% endif %}
+        
+        <h2>Add New Sales Event</h2>
+        <form method="POST" action="{{ url_for('events') }}">
+            <div>
+                <label for="event_id">Event ID:</label>
+                <input type="text" id="event_id" name="event_id" required>
+            </div>
+            <div>
+                <label for="name">Event Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" required>
+            </div>
+            <div>
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date" required>
+            </div>
+            <div>
+                <label for="discount_percent">Discount Percentage:</label>
+                <input type="number" id="discount_percent" name="discount_percent" min="1" max="100" required>
+            </div>
+            <button type="submit">Create Sale Event</button>
+        </form>
+        
+        <h2>All Sales Events</h2>
+        {% if events %}
+        <table border="1">
+            <tr>
+                <th>Event ID</th>
+                <th>Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Discount %</th>
+            </tr>
+            {% for event in events %}
+            <tr>
+                <td>{{ event.EventID }}</td>
+                <td>{{ event.Name }}</td>
+                <td>{{ event.startDate }}</td>
+                <td>{{ event.endDate }}</td>
+                <td>{{ event.discountPercent }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No sales events found.</p>
+        {% endif %}
+    </section>
+    <!-- Active Events Section -->
+<section>
+    <h2>Currently Active Promotions</h2>
+    {% set has_active = false %}
+    {% for event in events %}
+        {% if event.startDate|string <= current_date|string and event.endDate|string >= current_date|string %}
+            {% if loop.first %}
+                <table border="1">
+                    <tr>
+                        <th>Event Name</th>
+                        <th>Discount</th>
+                        <th>End Date</th>
+                    </tr>
+            {% endif %}
+            {% set has_active = true %}
+            <tr>
+                <td>{{ event.Name }}</td>
+                <td>{{ event.discountPercent }}%</td>
+                <td>{{ event.endDate }}</td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+    
+    {% if has_active %}
+        </table>
+    {% else %}
+        <p>No active promotions at this time.</p>
+    {% endif %}
+</section>
+</body>
+</html>
