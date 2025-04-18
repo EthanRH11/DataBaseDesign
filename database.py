@@ -226,8 +226,8 @@ class Database:
                 ON c.CustomerID = wr.CustomerID 
                 WHERE wr.status = %s
                 """
-            cursor.execute(query, (status,))
-            return cursor.fetchall()
+                cursor.execute(query, (status,))
+                return cursor.fetchall()
         except pymysql.MySQLError as e:
             error_msg = str(e)
             print(f"Error getting repairs by status: {error_msg}")
@@ -367,26 +367,6 @@ class Database:
         except pymysql.MySQLError as e:
             print(f"Error getting active sale events: {e}")
             return []
-        
-    def get_part_by_id(self, part_id):
-        conn = self.connect()
-        if conn is None:
-            return []
-
-        try: 
-            with conn.cursor() as cursor:
-                query="""
-                SELECT partID, Name, Description, QuantityInStock
-                FROM ehicks12.WatchPart
-                WHERE partID = %s
-                """
-                cursor.execute(query, (part_id,))
-                result = cursor.fetchone()
-                return result
-        except pymysql.MySQLError as e:
-            error_msg = str(e)
-            print("Error Getting watch part by id: {e}")
-            return None
             
     def get_part_by_name(self, part_name):
         conn = self.connect()

@@ -10,24 +10,54 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script defer src="{{ url_for('static', filename='app.js') }}"></script>
     <style>
-        .status-in-progress {
+        /* Status badges for repair statuses */
+        .status-badge {
             display: inline-block;
             padding: 5px 10px;
             border-radius: 20px;
-            background-color: #f0ad4e;
             color: white;
             font-family: Fancy;
             font-size: 14px;
         }
 
-        .status-complete {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 20px;
+        .status-Completed {
             background-color: #5cb85c;
-            color: white;
-            font-family: Fancy;
-            font-size: 14px;
+            /* Green */
+        }
+
+        .status-In-Progress {
+            background-color: #f0ad4e;
+            /* Orange */
+        }
+
+        .status-Awaiting-Parts {
+            background-color: #d9534f;
+            /* Red */
+        }
+
+        .status-Scheduled {
+            background-color: #5bc0de;
+            /* Blue */
+        }
+
+        .status-Diagnostics {
+            background-color: #9370db;
+            /* Purple */
+        }
+
+        /* Status filter button container */
+        .status-filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        /* Make the buttons display horizontally */
+        .status-filters a {
+            display: inline-block;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -72,19 +102,14 @@
 
     <section class="hidden">
         <!--Filter buttons for repair status-->
-        <div class="button-group">
-            <a href="{{url_for('repairs', status='in progress') }}">
-                <button {% if selected_status=='in progress' %}style="background-color: #3c3c3c; color: white;" {% endif
-                    %}>
-                    In Progress
+        <div class="status-filters">
+            {% for status in all_statuses %}
+            <a href="{{ url_for('repairs', status=status) }}">
+                <button {% if selected_status==status %}style="background-color: #3c3c3c; color: white;" {% endif %}>
+                    {{ status }}
                 </button>
             </a>
-            <a href="{{url_for('repairs', status='in Complete') }}">
-                <button {% if selected_status=='in Complete' %}style="background-color: #3c3c3c; color: white;" {% endif
-                    %}>
-                    Complete
-                </button>
-            </a>
+            {% endfor %}
         </div>
 
         {% if repairs %}
@@ -107,11 +132,9 @@
                         <td>{{ repair.number }}</td>
                         <td>{{ repair.repairID }}</td>
                         <td>
-                            {% if repair.status == 'in progress' %}
-                            <span class="status-in-progress">{{ repair.status }}</span>
-                            {% else %}
-                            <span class="status-complete">{{ repair.status }}</span>
-                            {% endif %}
+                            <span class="status-badge status-{{ repair.status|replace(' ', '-') }}">
+                                {{ repair.status }}
+                            </span>
                         </td>
                     </tr>
                     {% endfor %}

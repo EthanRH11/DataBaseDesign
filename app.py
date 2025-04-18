@@ -55,11 +55,13 @@ def login():
 
 @app.route("/repairs")
 def repairs():
-    status = request.args.get('status', 'in progress')
+    status = request.args.get('status', 'In Progress')
 
     repairs_data = db.get_watch_repairs_by_status(status)
 
-    return render_template("repair.html", repairs=repairs_data, selected_status=status)
+    all_statuses = ["Completed", "In Progress", "Diagnostics", "Awaiting Parts", "Scheduled"]
+
+    return render_template("repair.html", repairs=repairs_data, selected_status=status, all_statuses=all_statuses)
 
 @app.route("/employee")
 def employee():
