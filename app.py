@@ -12,9 +12,26 @@ db = Database()
 def home():
     return render_template("home.html")
 
-@app.route("/shop")
+@app.route("/shop", methods=["GET", "POST"])
 def shop():
-    return render_template("shop.html")
+    part_data = None
+    message = None
+    
+    if request.method == "POST":
+        # Debug print to see if we're hitting this code path
+        print("POST request received")
+        
+        part_name = request.form.get("part_name")
+        print(f"Searching for part: {part_name}")
+        
+        if part_name:
+            part_data = db.get_part_by_name(part_name)
+            print(f"Part data returned: {part_data}")
+            
+            if not part_data:
+                message = f"No part found with name: {part_name}"
+    
+    return render_template("shop.html", part=part_data, message=message)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

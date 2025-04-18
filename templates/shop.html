@@ -1,6 +1,7 @@
 <!-- This will be the parts main page -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script defer src="{{ url_for('static', filename='app.js') }}"></script>
 </head>
+
 <body>
     <!-- Navbar Section -->
     <nav class="navBar">
@@ -25,9 +27,9 @@
         </div>
         <div class="right-items">
             {% if session.get("employee_id") %}
-                <a href="{{ url_for('login') }}" class="login">{{ session["employee_id"] }}</a>
+            <a href="{{ url_for('login') }}" class="login">{{ session["employee_id"] }}</a>
             {% else %}
-                <a href="{{ url_for('login') }}" class="login">Login</a>
+            <a href="{{ url_for('login') }}" class="login">Login</a>
             {% endif %}
         </div>
     </nav>
@@ -37,26 +39,71 @@
         <source src="{{ url_for('static', filename='assets/12987981_1920_1080_30fps.mp4') }}" type="video/mp4">
     </video>
 
-
     <section class="hidden">
-        <h1>Parts</h1>
-    </section>  
-
-<<<<<<< HEAD
-    <!-- Commit Sauce -->
-
-    <div>
-        <nav class="divide"> <p>.</p> </nav>
-    </div>
-
-=======
-    <div>
-        <nav class="divide"> <p>.</p> </nav>
-    </div>
-    
->>>>>>> 4160c6f96d19b2ed9f2b32617a9f2b9e0542b3db
-    <section class="hidden">
-        <p>This is the homepage of our site.</p>
+        <h1>Watch Parts</h1>
     </section>
+
+    <!-- Commit Sauce -->
+    <div>
+        <nav class="divide">
+            <p>.</p>
+        </nav>
+    </div>
+
+    <section class="hidden">
+        <!-- Part Search Form -->
+        <div class="containerSign">
+            <div class="formLayout">
+                <h4>Search Watch Parts</h4>
+                <form method="POST" action="{{ url_for('shop') }}">
+                    <label for="part_name">Part Name:</label>
+                    <input type="text" id="part_name" name="part_name" required>
+                    <button type="submit">Search</button>
+                </form>
+
+                {% if message %}
+                <div class="status-msg">{{ message }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    {% if part %}
+    <section class="hidden">
+        <div class="containerSign" style="margin-top: -50vh;">
+            <div class="formLayout">
+                <h4>Part Details</h4>
+                <div
+                    style="text-align: left; padding: 15px; background-color: rgba(255, 255, 255, 0.7); border-radius: 5px;">
+                    <p style="color: #2b2b2b; text-shadow: none; font-size: 20px;"><strong>ID:</strong> {{ part.partID
+                        }}</p>
+                    <p style="color: #2b2b2b; text-shadow: none; font-size: 20px;"><strong>Name:</strong> {{ part.Name
+                        }}</p>
+                    <p style="color: #2b2b2b; text-shadow: none; font-size: 20px;"><strong>Description:</strong> {{
+                        part.Description }}</p>
+                    <p style="color: #2b2b2b; text-shadow: none; font-size: 20px;"><strong>In Stock:</strong> {{
+                        part.QuantityInStock }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <script>
+        // This ensures the animations work for the dynamically shown part details
+        document.addEventListener("DOMContentLoaded", function () {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            });
+
+            const hiddenElements = document.querySelectorAll('.hidden');
+            hiddenElements.forEach((el) => observer.observe(el));
+        });
+    </script>
 </body>
+
 </html>

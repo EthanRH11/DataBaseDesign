@@ -9,6 +9,27 @@
     <title>Repair</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+    <style>
+        .status-in-progress {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background-color: #f0ad4e;
+            color: white;
+            font-family: Fancy;
+            font-size: 14px;
+        }
+
+        .status-complete {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background-color: #5cb85c;
+            color: white;
+            font-family: Fancy;
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,9 +48,9 @@
         </div>
         <div class="right-items">
             {% if session.get("employee_id") %}
-                <a href="{{ url_for('login') }}" class="login">{{ session["employee_id"] }}</a>
+            <a href="{{ url_for('login') }}" class="login">{{ session["employee_id"] }}</a>
             {% else %}
-                <a href="{{ url_for('login') }}" class="login">Login</a>
+            <a href="{{ url_for('login') }}" class="login">Login</a>
             {% endif %}
         </div>
     </nav>
@@ -38,7 +59,6 @@
     <video autoplay loop muted plays-inline class="back-vid">
         <source src="{{ url_for('static', filename='assets/8322341-uhd_4096_2160_25fps.mp4') }}" type="video/mp4">
     </video>
-
 
     <section class="hidden">
         <h1>Repairs</h1>
@@ -52,36 +72,56 @@
 
     <section class="hidden">
         <!--Filter buttons for repair status-->
-        <div>
-            <a href="{{url_for('repairs', status='in progress') }}">In Progress</a>
-            <a href="{{url_for('repairs', status='in Complete') }}">Complete</a>
+        <div class="button-group">
+            <a href="{{url_for('repairs', status='in progress') }}">
+                <button {% if selected_status=='in progress' %}style="background-color: #3c3c3c; color: white;" {% endif
+                    %}>
+                    In Progress
+                </button>
+            </a>
+            <a href="{{url_for('repairs', status='in Complete') }}">
+                <button {% if selected_status=='in Complete' %}style="background-color: #3c3c3c; color: white;" {% endif
+                    %}>
+                    Complete
+                </button>
+            </a>
         </div>
 
         {% if repairs %}
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Customer ID</th>
-                    <th>Customer Name</th>
-                    <th>Phone Number</th>
-                    <th>Repair ID</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for repair in repairs %}
-                <tr>
-                    <td>{{ repair.CustomerID }}</td>
-                    <td>{{ repair.FirstName }}</td>
-                    <td>{{ repair.number }}</td>
-                    <td>{{ repair.repairID }}</td>
-                    <td>{{ repair.status }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="containerSign" style="width: 80%; margin-top: 30px;">
+            <table class="employee-table" style="width: 100%; margin: 0;">
+                <thead>
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Customer Name</th>
+                        <th>Phone Number</th>
+                        <th>Repair ID</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for repair in repairs %}
+                    <tr>
+                        <td>{{ repair.CustomerID }}</td>
+                        <td>{{ repair.FirstName }}</td>
+                        <td>{{ repair.number }}</td>
+                        <td>{{ repair.repairID }}</td>
+                        <td>
+                            {% if repair.status == 'in progress' %}
+                            <span class="status-in-progress">{{ repair.status }}</span>
+                            {% else %}
+                            <span class="status-complete">{{ repair.status }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% else %}
-        <p>No repairs found with status: {{ selected_status }}</p>
+        <div class="containerSign" style="margin-top: 30px; text-align: center;">
+            <p style="color: #2b2b2b; text-shadow: none;">No repairs found with status: {{ selected_status }}</p>
+        </div>
         {% endif %}
     </section>
 </body>
