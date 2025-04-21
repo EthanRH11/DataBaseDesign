@@ -65,14 +65,23 @@ def repairs():
 
     return render_template("repair.html", repairs=repairs_data, selected_status=status, all_statuses=all_statuses)
 
-@app.route("/employee")
+@app.route("/employee", methods =["GET","POST"])
 def employee():
-    employees = db.list_all_employees()
+    if request.method == "POST":
+        name_part = request.form.get("search", "")
+        employees = db.fetchSpecificEmployee(name_part)
+    else:
+        employees = db.list_all_employees()
     return render_template("employee.html", employees=employees)
 
-@app.route("/customer")
+@app.route("/customer", methods=["GET","POST"])
 def customer():
-    customers = db.listAllCustomers()
+    if request.method == "POST":
+        name_part = request.form.get("search", "")
+        customers = db.fetchSpecificCustomer(name_part)
+    else:
+        customers = db.listAllCustomers()
+
     return render_template("customer.html", customers=customers)
 
 
