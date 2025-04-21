@@ -1,6 +1,7 @@
 <!-- This will be the home main page -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script defer src="{{ url_for('static', filename='app.js') }}"></script>
 </head>
+
 <body>
     <!-- Navbar Section -->
     <nav class="navBar">
@@ -21,13 +23,14 @@
                 <li><a href="{{ url_for('employee') }}">Employees</a></li>
                 <li><a href="{{ url_for('customer') }}">Customers</a></li>
                 <li><a href="{{ url_for('events') }}">Sales Events</a></li>
+                <li><a href="{{ url_for('watches') }}">Watches</a></li>
             </ul>
         </div>
         <div class="right-items">
             {% if session.get("employee_id") %}
-                <a href="{{ url_for('login') }}" class="login">{{ session["employee_id"] }}</a>
+            <a href="{{ url_for('login') }}" class="login">{{ session["employee_id"] }}</a>
             {% else %}
-                <a href="{{ url_for('login') }}" class="login">Login</a>
+            <a href="{{ url_for('login') }}" class="login">Login</a>
             {% endif %}
         </div>
     </nav>
@@ -40,10 +43,12 @@
 
     <section class="hidden">
         <h1>Employees</h1>
-    </section>  
+    </section>
 
     <div>
-        <nav class="divide"> <p>.</p> </nav>
+        <nav class="divide">
+            <p>.</p>
+        </nav>
     </div>
 
     <section class="hidden">
@@ -60,17 +65,18 @@
             </thead>
             <tbody>
                 {% for employee in employees %}
-                    <tr>
-                        <td>{{ employee['EmployeeID'] }}</td>
-                        <td>{{ employee['FirstName'] }}</td>
-                        <td>{{ employee['LastName'] }}</td>
-                        <td>{{ employee['Role'] }}</td>
-                        <td>{{ employee['CompanyID'] }}</td>
-                    </tr>
+                <tr>
+                    <td>{{ employee['EmployeeID'] }}</td>
+                    <td>{{ employee['FirstName'] }}</td>
+                    <td>{{ employee['LastName'] }}</td>
+                    <td>{{ employee['Role'] }}</td>
+                    <td>{{ employee['CompanyID'] }}</td>
+                </tr>
                 {% endfor %}
-            </tbody>            
+            </tbody>
         </table>
 
     </section>
 </body>
+
 </html>

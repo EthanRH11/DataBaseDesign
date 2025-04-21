@@ -1,6 +1,7 @@
 <!-- This will be the home main page -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script defer src="{{ url_for('static', filename='app.js') }}"></script>
 </head>
+
 <body>
     <!-- Navbar Section -->
     <nav class="navBar">
@@ -21,6 +23,7 @@
                 <li><a href="{{ url_for('employee') }}">Employees</a></li>
                 <li><a href="{{ url_for('customer') }}">Customers</a></li>
                 <li><a href="{{ url_for('events') }}">Sales Events</a></li>
+                <li><a href="{{ url_for('watches') }}">Watches</a></li>
             </ul>
         </div>
         <div class="right-items">
@@ -35,10 +38,12 @@
 
     <section class="hidden">
         <h1>Customers</h1>
-    </section>  
+    </section>
 
     <div>
-        <nav class="divide"> <p>.</p> </nav>
+        <nav class="divide">
+            <p>.</p>
+        </nav>
     </div>
 
     <section class="hidden">
@@ -55,16 +60,17 @@
             </thead>
             <tbody>
                 {% for customer in customers %}
-                    <tr>
-                        <td>{{ customer['CustomerID'] }}</td>
-                        <td>{{ customer['FirstName'] }}</td>
-                        <td>{{ customer['LastName'] }}</td>
-                        <td>{{ customer['email'] }}</td>
-                        <td>{{ customer['number'] }}</td>
-                    </tr>
+                <tr>
+                    <td>{{ customer['CustomerID'] }}</td>
+                    <td>{{ customer['FirstName'] }}</td>
+                    <td>{{ customer['LastName'] }}</td>
+                    <td>{{ customer['email'] }}</td>
+                    <td>{{ customer['number'] }}</td>
+                </tr>
                 {% endfor %}
-            </tbody>            
+            </tbody>
         </table>
     </section>
 </body>
+
 </html>

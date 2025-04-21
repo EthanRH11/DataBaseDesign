@@ -387,3 +387,20 @@ class Database:
             print("Error getting watch part by name: {e}")
             return None
         
+    def get_all_parts(self):
+        conn = self.connect()
+        if conn is None:
+            return []
+        
+        try:
+            with conn.cursor() as cursor:
+                query="""
+                Select partID, Name, Description, QuantityInStock
+                From ehicks12.WatchPart
+                ORDER BY Name
+                """
+                cursor.execute(query)
+                return cursor.fetchall()
+        except pymysql.MySQLError as e:
+            print(f"Error getting employees: {e}")
+            return []
