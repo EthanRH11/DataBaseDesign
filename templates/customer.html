@@ -27,7 +27,11 @@
             </ul>
         </div>
         <div class="right-items">
+            {% if session.get("employee_id") %}
+            <a href="{{ url_for('login') }}" class="login">{{ session["employee_id"] }}</a>
+            {% else %}
             <a href="{{ url_for('login') }}" class="login">Login</a>
+            {% endif %}
         </div>
     </nav>
 
@@ -40,37 +44,57 @@
         <h1>Customers</h1>
     </section>
 
+    <!-- Customer Search -->
+    <section class="customer-search">
+        <p>Customer Search</p>
+        <form method="POST" action="/customer">
+            <input type="text" name="search" value="{{ request.form.search or '' }}" placeholder="Search Name, ID, Number, or Email">
+            <input type="submit" value="Search">
+            <button type="button" onclick="resetSearch()">Reset</button>
+        </form>
+    </section>
+
+    <!-- Divider -->
     <div>
-        <nav class="divide">
-            <p>.</p>
-        </nav>
+        <nav class="divide"><p>.</p></nav>
     </div>
 
-    <section class="hidden">
+    <!-- Customer Table -->
+    <section class="customer-list">
         <p>Our Customers</p>
-        <table class="employee-table">
-            <thead>
-                <tr>
-                    <th>CustomerID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for customer in customers %}
-                <tr>
-                    <td>{{ customer['CustomerID'] }}</td>
-                    <td>{{ customer['FirstName'] }}</td>
-                    <td>{{ customer['LastName'] }}</td>
-                    <td>{{ customer['email'] }}</td>
-                    <td>{{ customer['number'] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        {% if not customers %}
+            <p>No customers found matching your search.</p>
+        {% else %}
+            <table class="employee-table">
+                <thead>
+                    <tr>
+                        <th>CustomerID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                        <tr>
+                            <td>{{ customer['CustomerID'] }}</td>
+                            <td>{{ customer['FirstName'] }}</td>
+                            <td>{{ customer['LastName'] }}</td>
+                            <td>{{ customer['email'] }}</td>
+                            <td>{{ customer['number'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </section>
-</body>
 
+    <script>
+        function resetSearch() {
+            document.querySelector('input[name="search"]').value = '';
+            window.location.href = "/customer";
+        }
+    </script>
+</body>
 </html>

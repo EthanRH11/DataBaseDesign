@@ -81,16 +81,61 @@ class Database:
             with conn.cursor() as cursor:
                 query = """
                 SELECT * FROM ehicks12.Customer
-                WHERE FirstName LIKE %s
+                WHERE FirstName LIKE %s OR LastName LIKE %s
+                    OR email LIKE %s
+                    OR number LIKE %s
+                    OR CustomerID LIKE %s
                 """
-                print(f"Executing query with parameters: '%{name_part}%'")
-                cursor.execute(query, (f'%{name_part}%',))
+
+                wildcard = f"%{name_part}%"
+                print(f"Executing query with parameters: '%{wildcard}%' across multiple fields")
+                cursor.execute(query, (wildcard, wildcard, wildcard, wildcard, wildcard))
                 results = cursor.fetchall()
                 print(f"Search results for name '{name_part}': {results}")
 
                 if not results:
                     print("No results found, trying more basic query...")
                     basic_query = "SELECT * FROM ehicks12.Customer LIMIT 5"
+                    cursor.execute(basic_query)
+                    sample_results = cursor.fetchall()
+                    print(f"Sample customer records: {sample_results}")
+
+                return results
+        except pymysql.MySQLError as e:
+            error_msg = str(e)
+            print(f"Error searching customers by name: {error_msg}")
+            return []
+        
+    def fetchSpecificEmployee(self, name_part):
+        conn = self.connect()
+        if conn is None:
+            return []
+        
+        try:
+            with conn.cursor() as cursor:
+                check_query = "SELECT COUNT(*) as count FROM ehicks12.Employee"
+                cursor.execute(check_query)
+                result = cursor.fetchone()
+                print(f"Total employees in database: {result['count'] if result else 'unknown'}")
+
+            with conn.cursor() as cursor:
+                query = """
+                SELECT * FROM ehicks12.Employee
+                WHERE FirstName LIKE %s OR LastName LIKE %s
+                    OR Role LIKE %s
+                    OR EmployeeID LIKE %s
+                    OR CompanyID LIKE %s
+                """
+
+                wildcard = f"%{name_part}%"
+                print(f"Executing query with parameters: '%{wildcard}%' across multiple fields")
+                cursor.execute(query, (wildcard, wildcard, wildcard, wildcard, wildcard))
+                results = cursor.fetchall()
+                print(f"Search results for name '{name_part}': {results}")
+
+                if not results:
+                    print("No results found, trying more basic query...")
+                    basic_query = "SELECT * FROM customer LIMIT 5"
                     cursor.execute(basic_query)
                     sample_results = cursor.fetchall()
                     print(f"Sample customer records: {sample_results}")

@@ -43,40 +43,57 @@
 
     <section class="hidden">
         <h1>Employees</h1>
+    </section>  
+
+    <!-- Employee Search -->
+    <section class="customer-search">
+        <p>Employee Search</p>
+        <form method="POST" action="/employee">
+            <input type="text" name="search" value="{{ request.form.search or '' }}" placeholder="Search Name, ID, or Role">
+            <input type="submit" value="Search">
+            <button type="submit" name="reset" onclick="resetSearch()">Reset</button>
+        </form>
     </section>
 
     <div>
-        <nav class="divide">
-            <p>.</p>
-        </nav>
+        <nav class="divide"> <p>.</p> </nav>
     </div>
 
     <section class="hidden">
         <p>Our Team</p>
-        <table class="employee-table">
-            <thead>
-                <tr>
-                    <th>EmployeeID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Role</th>
-                    <th>CompanyID</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for employee in employees %}
-                <tr>
-                    <td>{{ employee['EmployeeID'] }}</td>
-                    <td>{{ employee['FirstName'] }}</td>
-                    <td>{{ employee['LastName'] }}</td>
-                    <td>{{ employee['Role'] }}</td>
-                    <td>{{ employee['CompanyID'] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
+        {% if not employees %}
+            <p>No employee found matching your search.</p>
+        {% else %}
+            <table class="employee-table">
+                <thead>
+                    <tr>
+                        <th>EmployeeID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Role</th>
+                        <th>CompanyID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                        <tr>
+                            <td>{{ employee['EmployeeID'] }}</td>
+                            <td>{{ employee['FirstName'] }}</td>
+                            <td>{{ employee['LastName'] }}</td>
+                            <td>{{ employee['Role'] }}</td>
+                            <td>{{ employee['CompanyID'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>            
+            </table>
+        {% endif %}
     </section>
-</body>
 
+    <script>
+        function resetSearch() {
+            document.querySelector('input[name="search"]').value = '';
+            window.location.href = "/employee";
+        }
+    </script>
+</body>
 </html>
