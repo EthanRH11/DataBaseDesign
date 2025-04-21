@@ -337,14 +337,14 @@ class Database:
             return []
     
         try:
-            with conn.cursor() as cursor:
+            with conn.cursor(pymysql.cursors.DictCursor) as cursor:  
                 query = """
-            SELECT EventID, Name, startDate, endDate, discountPercent
-            FROM ehicks12.SaleEvent
-            ORDER BY startDate
-            """
-            cursor.execute(query)
-            return cursor.fetchall()
+                SELECT EventID, Name, startDate, endDate, discountPercent
+                FROM ehicks12.SaleEvent
+                ORDER BY startDate
+                """
+                cursor.execute(query)
+                return cursor.fetchall()
         except pymysql.MySQLError as e:
             print(f"Error getting sale events: {e}")
             return []
@@ -355,7 +355,7 @@ class Database:
             return []
     
         try:
-            with conn.cursor() as cursor:
+            with conn.cursor(pymysql.cursors.DictCursor) as cursor:  
                 query = """
                 SELECT EventID, Name, startDate, endDate, discountPercent
                 FROM ehicks12.SaleEvent
