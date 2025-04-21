@@ -363,3 +363,49 @@ select {
     width: 100%;
     text-align: center;
 }
+
+/* customer search style */
+
+.customer-search form {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.customer-search input[type="text"] {
+    flex: 1 1 65%;
+    max-width: 500px;
+    padding: 0.75rem 1rem;
+    height: 48px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #fff;
+    color: #333;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
+}
+
+.customer-search input[type="text"]:focus {
+    border-color: #555;
+    outline: none;
+}
+
+.customer-search input[type="submit"],
+.customer-search button {
+    height: 48px;
+    padding: 0 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.customer-search input[type="submit"]:hover,
+.customer-search button:hover {
+    background-color: #555;
+}
