@@ -134,16 +134,5 @@ def watches():
 
     return render_template("watches.html", watch=watch_data, message=message, all_watches=all_watches)
 
-@app.route("/watch/<int:watch_id>")
-def watch_details(watch_id):
-    watch_data = db.get_Watch_by_ID(watch_id)
-
-    if not watch_data:
-        return redirect(url_for("watches"))
-    
-    all_watches = db.get_Watch_By_Price()
-
-    return render_template("watches.html", watch=watch_data, message=None, all_watches=all_watches)
-
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
