@@ -5,7 +5,7 @@
 }
 
 html {
-    background-color: #2f2f2f;
+    background-color: #595959;
 }
 
 @font-face {
@@ -262,6 +262,17 @@ select {
     gap: 10px;
 }
 
+.containerSignThick {
+    background-color: #f4f4f4;
+    width: 80%;
+    padding: 40px 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .formLayout {
     display: flex;
     flex-direction: column;
@@ -316,12 +327,46 @@ select {
     font-weight: bold;
 }
 
+.status-filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.status-filters a {
+    text-decoration: none;
+}
+
+.status-filters button {
+    font-family: Fancy;
+    font-size: large;
+    width: 200px;
+    height: 40px;
+    margin-top: -200px;
+    background-color: #e8e8e8;
+    box-shadow: 0 0 2px #222, 0 0 5px #222;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.status-filters button:hover {
+    background-color: #bdbcbc;
+    color: #2b2b2b;
+}
+
+.status-filters button:active {
+    font-size: medium;
+    background-color: #3c3c3c;
+    color: white;
+}
 /* Employee table style */
 .employee-table {
     width: 80%;
     margin: 2rem auto;
     border-collapse: collapse;
-    background-color: rgba(255, 255, 255, 0.9); /* light glass effect */
+    background-color: rgba(255, 255, 255, 0.9); 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     font-family: 'Segoe UI', sans-serif;
     border-radius: 8px;
@@ -364,7 +409,7 @@ select {
     text-align: center;
 }
 
-/* customer search style */
+/* customer style shizz */
 
 .customer-search form {
     display: flex;
@@ -409,3 +454,106 @@ select {
 .customer-search button:hover {
     background-color: #555;
 }
+
+/* Sales Events Page Enhancements */
+.events-section {
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    font-family: Fancy;
+    color: whitesmoke;
+}
+
+.events-section h1,
+.events-section h2 {
+    font-family: Fancy;
+    text-align: center;
+    color: whitesmoke;
+    text-shadow: 2px 2px 5px black, -2px -2px 5px black;
+    margin-bottom: 10px;
+}
+
+.sales-event-form {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px #222, 0 0 10px #222;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sales-event-form label {
+    color: #2b2b2b;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.sales-event-form input {
+    font-family: Fancy;
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #999;
+    box-shadow: 0 0 2px #222;
+}
+
+.sales-event-form button {
+    margin-top: 15px;
+    background-color: #2b2b2b;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Fancy;
+    box-shadow: 0 0 5px #111;
+    transition: background-color 0.3s ease;
+}
+
+.sales-event-form button:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+/* Unified table look */
+.sales-table {
+    width: 80%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Fancy2', sans-serif;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.sales-table td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: #2b2b2b
+}
+
+.sales-table th {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: #ddd;
+    font-weight: bolder;
+    font-size: larger;
+    font-style: italic;
+}
+
+.sales-table thead {
+    background-color: #2b2b2b;
+    color: #fff;
+}
+
+.sales-table tr:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: 0.3s ease;
+}
+

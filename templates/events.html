@@ -34,87 +34,85 @@
         </div>
     </nav>
 
-    <section>
+    <section class="events-section">
         <h1>Sales Events Management</h1>
-
+    
         {% if message %}
-        <div>
-            {{ message }}
-        </div>
+        <p class="status-msg">{{ message }}</p>
         {% endif %}
-
+    
         <h2>Add New Sales Event</h2>
-        <form method="POST" action="{{ url_for('events') }}">
-            <div>
-                <label for="event_id">Event ID:</label>
-                <input type="text" id="event_id" name="event_id" required>
-            </div>
-            <div>
-                <label for="name">Event Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div>
-                <label for="start_date">Start Date:</label>
-                <input type="date" id="start_date" name="start_date" required>
-            </div>
-            <div>
-                <label for="end_date">End Date:</label>
-                <input type="date" id="end_date" name="end_date" required>
-            </div>
-            <div>
-                <label for="discount_percent">Discount Percentage:</label>
-                <input type="number" id="discount_percent" name="discount_percent" min="1" max="100" required>
-            </div>
+        <form method="POST" action="{{ url_for('events') }}" class="sales-event-form">
+            <label for="event_id">Event ID:</label>
+            <input type="text" id="event_id" name="event_id" required>
+    
+            <label for="name">Event Name:</label>
+            <input type="text" id="name" name="name" required>
+    
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required>
+    
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" required>
+    
+            <label for="discount_percent">Discount Percentage:</label>
+            <input type="number" id="discount_percent" name="discount_percent" min="1" max="100" required>
+    
             <button type="submit">Create Sale Event</button>
         </form>
-
-        <!-- All Sales Events Section -->
-<h2>All Sales Events</h2>
-{% if events and events|length > 0 %}
-<table border="1">
-    <tr>
-        <th>Event ID</th>
-        <th>Name</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Discount %</th>
-    </tr>
-    {% for event in events %}
-    <tr>
-        <td>{{ event.EventID }}</td>
-        <td>{{ event.Name }}</td>
-        <td>{{ event.startDate }}</td>
-        <td>{{ event.endDate }}</td>
-        <td>{{ event.discountPercent }}</td>
-    </tr>
-    {% endfor %}
-</table>
-{% else %}
-<p>No sales events found.</p>
-{% endif %}
+    
+        <h2>All Sales Events</h2>
+        {% if events and events|length > 0 %}
+        <table class="sales-table">
+            <thead>
+                <tr>
+                    <th>Event ID</th>
+                    <th>Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Discount %</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <td>{{ event.EventID }}</td>
+                    <td>{{ event.Name }}</td>
+                    <td>{{ event.startDate }}</td>
+                    <td>{{ event.endDate }}</td>
+                    <td>{{ event.discountPercent }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No sales events found.</p>
+        {% endif %}
+    
+        <h2>Currently Active Promotions</h2>
+        {% if active_events %}
+        <table class="sales-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Discount</th>
+                    <th>End Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in active_events %}
+                <tr>
+                    <td>{{ event.Name }}</td>
+                    <td>{{ event.discountPercent }}%</td>
+                    <td>{{ event.endDate }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No active promotions at this time.</p>
+        {% endif %}
     </section>
-    <!-- Active Events Section -->
-<section>
-    <h2>Currently Active Promotions</h2>
-    {% if active_events %}
-    <table border="1">
-        <tr>
-            <th>Event Name</th>
-            <th>Discount</th>
-            <th>End Date</th>
-        </tr>
-        {% for event in active_events %}
-        <tr>
-            <td>{{ event.Name }}</td>
-            <td>{{ event.discountPercent }}%</td>
-            <td>{{ event.endDate }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% else %}
-    <p>No active promotions at this time.</p>
-    {% endif %}
-</section>
 </body>
 
 </html>
