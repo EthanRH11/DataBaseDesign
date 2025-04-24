@@ -9,6 +9,57 @@
     <title>Repair</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+    <style>
+        /* Status badges for repair statuses */
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            color: white;
+            font-family: Fancy;
+            font-size: 14px;
+        }
+
+        .status-Completed {
+            background-color: #5cb85c;
+            /* Green */
+        }
+
+        .status-In-Progress {
+            background-color: #f0ad4e;
+            /* Orange */
+        }
+
+        .status-Awaiting-Parts {
+            background-color: #d9534f;
+            /* Red */
+        }
+
+        .status-Scheduled {
+            background-color: #5bc0de;
+            /* Blue */
+        }
+
+        .status-Diagnostics {
+            background-color: #9370db;
+            /* Purple */
+        }
+
+        /* Status filter button container */
+        .status-filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        /* Make the buttons display horizontally */
+        .status-filters a {
+            display: inline-block;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -21,13 +72,16 @@
                 <li><a href="{{ url_for('shop') }}">Parts Shop</a></li>
                 <li><a href="{{ url_for('repairs') }}">Repairs</a></li>
                 <li><a href="{{ url_for('employee') }}">Employees</a></li>
+                <li><a href="{{ url_for('customer') }}">Customers</a></li>
+                <li><a href="{{ url_for('events') }}">Sales Events</a></li>
+                <li><a href="{{ url_for('watches') }}">Watches</a></li>
             </ul>
         </div>
         <div class="right-items">
             {% if session.get("employee_id") %}
-                <a href="{{ url_for('login') }}" class="login">{{ session["employee_id"] }}</a>
+            <a href="{{ url_for('login') }}" class="login">{{ session["employee_id"] }}</a>
             {% else %}
-                <a href="{{ url_for('login') }}" class="login">Login</a>
+            <a href="{{ url_for('login') }}" class="login">Login</a>
             {% endif %}
         </div>
     </nav>
@@ -36,7 +90,6 @@
     <video autoplay loop muted plays-inline class="back-vid">
         <source src="{{ url_for('static', filename='assets/8322341-uhd_4096_2160_25fps.mp4') }}" type="video/mp4">
     </video>
-
 
     <section class="hidden">
         <h1>Repairs</h1>
@@ -50,36 +103,49 @@
 
     <section class="hidden">
         <!--Filter buttons for repair status-->
-        <div>
-            <a href="{{url_for('repairs', status='in progress') }}">In Progress</a>
-            <a href="{{url_for('repairs', status='in Complete') }}">Complete</a>
+        <div class="status-filters">
+            {% for status in all_statuses %}
+            <a href="{{ url_for('repairs', status=status) }}">
+                <button {% if selected_status==status %}style="background-color: #3c3c3c; color: white;" {% endif %}>
+                    {{ status }}
+                </button>
+            </a>
+            {% endfor %}
         </div>
 
         {% if repairs %}
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Customer ID</th>
-                    <th>Customer Name</th>
-                    <th>Phone Number</th>
-                    <th>Repair ID</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for repair in repairs %}
-                <tr>
-                    <td>{{ repair.CustomerID }}</td>
-                    <td>{{ repair.FirstName }}</td>
-                    <td>{{ repair.number }}</td>
-                    <td>{{ repair.repairID }}</td>
-                    <td>{{ repair.status }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="containerSign" style="width: 80%; margin-top: 30px;">
+            <table class="employee-table" style="width: 100%; margin: 0;">
+                <thead>
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Customer Name</th>
+                        <th>Phone Number</th>
+                        <th>Repair ID</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for repair in repairs %}
+                    <tr>
+                        <td>{{ repair.CustomerID }}</td>
+                        <td>{{ repair.FirstName }}</td>
+                        <td>{{ repair.number }}</td>
+                        <td>{{ repair.repairID }}</td>
+                        <td>
+                            <span class="status-badge status-{{ repair.status|replace(' ', '-') }}">
+                                {{ repair.status }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% else %}
-        <p>No repairs found with status: {{ selected_status }}</p>
+        <div class="containerSign" style="margin-top: 30px; text-align: center;">
+            <p style="color: #2b2b2b; text-shadow: none;">No repairs found with status: {{ selected_status }}</p>
+        </div>
         {% endif %}
     </section>
 </body>

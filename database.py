@@ -81,16 +81,61 @@ class Database:
             with conn.cursor() as cursor:
                 query = """
                 SELECT * FROM ehicks12.Customer
-                WHERE FirstName LIKE %s
+                WHERE FirstName LIKE %s OR LastName LIKE %s
+                    OR email LIKE %s
+                    OR number LIKE %s
+                    OR CustomerID LIKE %s
                 """
-                print(f"Executing query with parameters: '%{name_part}%'")
-                cursor.execute(query, (f'%{name_part}%',))
+
+                wildcard = f"%{name_part}%"
+                print(f"Executing query with parameters: '%{wildcard}%' across multiple fields")
+                cursor.execute(query, (wildcard, wildcard, wildcard, wildcard, wildcard))
                 results = cursor.fetchall()
                 print(f"Search results for name '{name_part}': {results}")
 
                 if not results:
                     print("No results found, trying more basic query...")
                     basic_query = "SELECT * FROM ehicks12.Customer LIMIT 5"
+                    cursor.execute(basic_query)
+                    sample_results = cursor.fetchall()
+                    print(f"Sample customer records: {sample_results}")
+
+                return results
+        except pymysql.MySQLError as e:
+            error_msg = str(e)
+            print(f"Error searching customers by name: {error_msg}")
+            return []
+        
+    def fetchSpecificEmployee(self, name_part):
+        conn = self.connect()
+        if conn is None:
+            return []
+        
+        try:
+            with conn.cursor() as cursor:
+                check_query = "SELECT COUNT(*) as count FROM ehicks12.Employee"
+                cursor.execute(check_query)
+                result = cursor.fetchone()
+                print(f"Total employees in database: {result['count'] if result else 'unknown'}")
+
+            with conn.cursor() as cursor:
+                query = """
+                SELECT * FROM ehicks12.Employee
+                WHERE FirstName LIKE %s OR LastName LIKE %s
+                    OR Role LIKE %s
+                    OR EmployeeID LIKE %s
+                    OR CompanyID LIKE %s
+                """
+
+                wildcard = f"%{name_part}%"
+                print(f"Executing query with parameters: '%{wildcard}%' across multiple fields")
+                cursor.execute(query, (wildcard, wildcard, wildcard, wildcard, wildcard))
+                results = cursor.fetchall()
+                print(f"Search results for name '{name_part}': {results}")
+
+                if not results:
+                    print("No results found, trying more basic query...")
+                    basic_query = "SELECT * FROM customer LIMIT 5"
                     cursor.execute(basic_query)
                     sample_results = cursor.fetchall()
                     print(f"Sample customer records: {sample_results}")
@@ -114,7 +159,7 @@ class Database:
                 """
                 cursor.execute(query, (CustomerID, FirstName, LastName, email, number))
                 conn.commit()
-                return True, "Student added successfully"
+                return True, "Customer added successfully"
         except pymysql.MySQLError as e:
             error_msg = str(e)
             print(f"Error adding stduent: {error_msg}")
@@ -226,8 +271,8 @@ class Database:
                 ON c.CustomerID = wr.CustomerID 
                 WHERE wr.status = %s
                 """
-            cursor.execute(query, (status,))
-            return cursor.fetchall()
+                cursor.execute(query, (status,))
+                return cursor.fetchall()
         except pymysql.MySQLError as e:
             error_msg = str(e)
             print(f"Error getting repairs by status: {error_msg}")
@@ -302,4 +347,105 @@ class Database:
         except pymysql.MySQLError as e:
             error_msg = str(e)
             print(f"Error getting watches by price: {error_msg}")
+            return []
+
+    def add_event(self, event_id, name, start_date, end_date, discount_percent):
+        conn = self.connect()
+        if conn is None:
+            return False, "Database connection failed"
+
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                INSERT INTO ehicks12.SaleEvent (EventID, Name, startDate, endDate, discountPercent)
+                VALUES (%s, %s, %s, %s, %s)
+                """
+                cursor.execute(query, (event_id, name, start_date, end_date, discount_percent))
+                conn.commit()
+                return True, "Sale event added successfully"
+        except pymysql.MySQLError as e:
+            error_msg = str(e)
+            print(f"Error adding sale event: {error_msg}")
+
+        try:
+            conn.rollback()
+        except:
+            pass
+
+        if "Duplicate entry" in error_msg and "PRIMARY" in error_msg:
+            error_msg = f"Event ID '{event_id}' already exists"
+            return False, error_msg
+
+    def list_all_events(self):
+        conn = self.connect()
+        if conn is None:
+            return []
+    
+        try:
+            with conn.cursor(pymysql.cursors.DictCursor) as cursor:  
+                query = """
+                SELECT EventID, Name, startDate, endDate, discountPercent
+                FROM ehicks12.SaleEvent
+                ORDER BY startDate
+                """
+                cursor.execute(query)
+                return cursor.fetchall()
+        except pymysql.MySQLError as e:
+            print(f"Error getting sale events: {e}")
+            return []
+        
+    def get_active_events(self):
+        conn = self.connect()
+        if conn is None:
+            return []
+    
+        try:
+            with conn.cursor(pymysql.cursors.DictCursor) as cursor:  
+                query = """
+                SELECT EventID, Name, startDate, endDate, discountPercent
+                FROM ehicks12.SaleEvent
+                WHERE CURDATE() BETWEEN startDate AND endDate
+                ORDER BY discountPercent DESC
+                """
+                cursor.execute(query)
+                return cursor.fetchall()
+        except pymysql.MySQLError as e:
+            print(f"Error getting active sale events: {e}")
+            return []
+            
+    def get_part_by_name(self, part_name):
+        conn = self.connect()
+        if conn is None:
+            return []
+
+        try:
+            with conn.cursor() as cursor:
+                query="""
+                SELECT partID, Name, Description, QuantityInStock
+                FROM ehicks12.WatchPart
+                WHERE Name = %s
+                """
+                cursor.execute(query, (part_name,))
+                result = cursor.fetchone()
+                return result
+        except pymysql.MySQLError as e:
+            print("Error getting watch part by name: {e}")
+            return None
+        
+    def get_all_parts(self):
+        conn = self.connect()
+        if conn is None:
+            return []
+        
+        try:
+            with conn.cursor() as cursor:
+                query="""
+                Select partID, Name, Description, QuantityInStock
+                From ehicks12.WatchPart
+                ORDER BY Name
+                """
+                cursor.execute(query)
+                return cursor.fetchall()
+        except pymysql.MySQLError as e:
+            print(f"Error getting employees: {e}")
             return []

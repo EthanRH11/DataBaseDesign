@@ -1,6 +1,7 @@
 <!-- This will be the login main page -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script defer src="{{ url_for('static', filename='app.js') }}"></script>
 </head>
+
 <body>
     <!-- Navbar Section -->
     <nav class="navBar">
@@ -19,13 +21,16 @@
                 <li><a href="{{ url_for('shop') }}">Parts Shop</a></li>
                 <li><a href="{{ url_for('repairs') }}">Repairs</a></li>
                 <li><a href="{{ url_for('employee') }}">Employees</a></li>
+                <li><a href="{{ url_for('customer') }}">Customers</a></li>
+                <li><a href="{{ url_for('events') }}">Sales Events</a></li>
+                <li><a href="{{ url_for('watches') }}">Watches</a></li>
             </ul>
         </div>
         <div class="right-items">
             {% if session.get("employee_id") %}
-                <a href="{{ url_for('login') }}" class="login">{{ session["employee_id"] }}</a>
+            <a href="{{ url_for('login') }}" class="login">{{ session["employee_id"] }}</a>
             {% else %}
-                <a href="{{ url_for('login') }}" class="login">Login</a>
+            <a href="{{ url_for('login') }}" class="login">Login</a>
             {% endif %}
         </div>
     </nav>
@@ -44,16 +49,17 @@
                     <input name="employee_id" required>
                     <button type="submit">Login</button>
                     {% if message %}
-                        <p class="status-msg">{{ message }}</p>
+                    <p class="status-msg">{{ message }}</p>
                     {% endif %}
                 </form>
                 <a href="{{ url_for('sign') }}"><button>Sign Up</button></a>
-                
-                
+
+
             </div>
         </section>
     </section>
 
 
 </body>
+
 </html>
