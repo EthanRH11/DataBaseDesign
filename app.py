@@ -84,6 +84,20 @@ def customer():
 
     return render_template("customer.html", customers=customers)
 
+@app.route('/newCustomer', methods=["GET", "POST"])
+def newCustomer():
+    if request.method == "POST":
+        customer_id = request.form['customer_id']
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        email = request.form['email']
+        phone_number = request.form['phone_number']
+
+        success, message = db.addCustomer(customer_id, first_name, last_name, email, phone_number)
+        return render_template("newCustomer.html", message=message)
+
+    return render_template("newCustomer.html")
+
 
 @app.route("/sign", methods=["GET", "POST"])
 def sign():
