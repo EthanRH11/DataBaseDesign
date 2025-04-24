@@ -51,8 +51,11 @@
             <input type="text" name="search" value="{{ request.form.search or '' }}" placeholder="Search Name, ID, Number, or Email">
             <input type="submit" value="Search">
             <button type="button" onclick="resetSearch()">Reset</button>
+            <a href="{{ url_for('newCustomer') }}">
+            <button type="button">Add New Customer</button>
+        </a>
         </form>
-    </section>
+    </section>  
 
     <!-- Divider -->
     <div>
