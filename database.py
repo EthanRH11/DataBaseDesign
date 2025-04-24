@@ -159,7 +159,7 @@ class Database:
                 """
                 cursor.execute(query, (CustomerID, FirstName, LastName, email, number))
                 conn.commit()
-                return True, "Student added successfully"
+                return True, "Customer added successfully"
         except pymysql.MySQLError as e:
             error_msg = str(e)
             print(f"Error adding stduent: {error_msg}")
