@@ -37,13 +37,16 @@
 
     <!-- Background Video (Blur only, no slide-in) -->
     <video autoplay loop muted plays-inline class="back-vid">
-        <source src="{{ url_for('static', filename='assets/1034067-hd_1920_1080_25fps.mp4') }}" type="video/mp4">
+        <source src="{{ url_for('static', filename='assets/24114-340421422_small.mp4') }}" type="video/mp4">
     </video>
 
     <section class="hidden">
         <h1>Customers</h1>
     </section>
 
+    <div>
+        <nav class="divide"> <p>.</p> </nav>
+    </div>
     <!-- Customer Search -->
     <section class="customer-search">
         <p>Customer Search</p>
@@ -57,14 +60,8 @@
         </form>
     </section>  
 
-    <!-- Divider -->
-    <div>
-        <nav class="divide"><p>.</p></nav>
-    </div>
-
     <!-- Customer Table -->
     <section class="customer-list">
-        <p>Our Customers</p>
         {% if not customers %}
             <p>No customers found matching your search.</p>
         {% else %}
