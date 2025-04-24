@@ -1,0 +1,69 @@
+<!-- This will be the sign main page -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/static/assets/Watch.png" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+
+<body>
+    <!-- Navbar Section -->
+    <nav class="navBar">
+        <div class="left-items">
+            <ul>
+                <img class="logo" src="{{ url_for('static', filename='assets/Watch.png') }}" alt="Logo">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('shop') }}">Parts Shop</a></li>
+                <li><a href="{{ url_for('repairs') }}">Repairs</a></li>
+                <li><a href="{{ url_for('employee') }}">Employees</a></li>
+                <li><a href="{{ url_for('customer') }}">Customers</a></li>
+                <li><a href="{{ url_for('events') }}">Sales Events</a></li>
+                <li><a href="{{ url_for('watches') }}">Watches</a></li>
+            </ul>
+        </div>
+        <div class="right-items">
+            <a href="{{ url_for('login') }}" class="login">Login</a>
+        </div>
+    </nav>
+
+    <!-- Background Video -->
+    <video autoplay loop muted plays-inline class="back-vid">
+        <source src="{{ url_for('static', filename='assets/3171546-hd_1920_1080_30fps.mp4') }}" type="video/mp4">
+    </video>
+
+    <!-- Sign Up Form -->
+    <section class="hidden">
+        <section class="containerLog">
+            <form method="POST" action="{{ url_for('newCustomer') }}" class="button-group">
+
+                <p class="signText">Customer ID:</p>
+                <input type="text" name="customer_id" required>
+
+                <p>First Name:</p>
+                <input type="text" name="first_name" required>
+
+                <p>Last Name:</p>
+                <input type="text" name="last_name" required>
+
+                <p>Email:</p>
+                <input type="email" name="email" required>
+
+                <p>Phone Number:</p>
+                <input type="text" name="phone_number" required>
+
+                <button type="submit" style="margin-top: 20px;">Make Account</button>
+
+                {% if message %}
+                <p class="status-msg">{{ message }}</p>
+                {% endif %}
+            </form>
+        </section>
+    </section>
+</body>
+
+</html>
