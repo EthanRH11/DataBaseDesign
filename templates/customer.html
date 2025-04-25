@@ -1,4 +1,3 @@
-<!-- This will be the home main page -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,7 +34,7 @@
         </div>
     </nav>
 
-    <!-- Background Video (Blur only, no slide-in) -->
+    <!-- Background Video -->
     <video autoplay loop muted plays-inline class="back-vid">
         <source src="{{ url_for('static', filename='assets/24114-340421422_small.mp4') }}" type="video/mp4">
     </video>
@@ -51,19 +50,19 @@
     <section class="customer-search">
         <p>Customer Search</p>
         <form method="POST" action="/customer">
-            <input type="text" name="search" value="{{ request.form.search or '' }}" placeholder="Search Name, ID, Number, or Email">
+            <input type="text" name="search" value="{{ search or '' }}" placeholder="Search Name, ID, Number, or Email">
             <input type="submit" value="Search">
             <button type="button" onclick="resetSearch()">Reset</button>
             <a href="{{ url_for('newCustomer') }}">
             <button type="button">Add New Customer</button>
-        </a>
+            </a>
         </form>
     </section>  
 
     <!-- Customer Table -->
     <section class="customer-list">
         {% if not customers %}
-            <p>No customers found matching your search.</p>
+            <p>No customers</p>
         {% else %}
             <table class="employee-table">
                 <thead>
@@ -73,6 +72,7 @@
                         <th>Last Name</th>
                         <th>Email</th>
                         <th>Number</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,6 +83,15 @@
                             <td>{{ customer['LastName'] }}</td>
                             <td>{{ customer['email'] }}</td>
                             <td>{{ customer['number'] }}</td>
+                            <td>
+                                <form method="GET" action="{{ url_for('editCustomer', customerID=customer['CustomerID']) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-edit">✏️</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('customer') }}" style="display:inline;">
+                                    <input type="hidden" name="deleteID" value="{{ customer['CustomerID'] }}">
+                                    <button type="submit" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this customer?');">🗑️</button>
+                                </form>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -93,7 +102,7 @@
     <script>
         function resetSearch() {
             document.querySelector('input[name="search"]').value = '';
-            window.location.href = "/customer";
+            window.location.href = "/customer"; 
         }
     </script>
 </body>

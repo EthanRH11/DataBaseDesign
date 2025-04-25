@@ -449,3 +449,149 @@ class Database:
         except pymysql.MySQLError as e:
             print(f"Error getting employees: {e}")
             return []
+
+
+        
+
+    def removeCustomer(self, CustomerID):
+        conn = self.connect()
+        if conn is None:
+            return False, "Database connection failed"
+
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                DELETE FROM ehicks12.customer WHERE CustomerID = %s
+                """
+                cursor.execute(query, (CustomerID,))
+                conn.commit()
+                if cursor.rowcount == 0:
+                    return False, f"No customer found with CustomerID '{CustomerID}'"
+                return True, "Customer removed successfully"
+        except pymysql.MySQLError as e:
+            error_msg = str(e)
+            print(f"Error removing customer: {error_msg}")
+            try:
+                conn.rollback()
+            except:
+                pass
+            return False, error_msg
+        
+    def removeEmployee(self, EmployeeID):
+        conn = self.connect()
+        if conn is None:
+            return False, "Database connection failed"
+
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                DELETE FROM ehicks12.Employee WHERE EmployeeID = %s
+                """
+                cursor.execute(query, (EmployeeID,))
+                conn.commit()
+                if cursor.rowcount == 0:
+                    return False, f"No employee found with EmployeeID '{EmployeeID}'"
+                return True, "Employee removed successfully"
+        except pymysql.MySQLError as e:
+            error_msg = str(e)
+            print(f"Error removing customer: {error_msg}")
+            try:
+                conn.rollback()
+            except:
+                pass
+            return False, error_msg
+        
+    def getCustomerByID(self, customerID):
+        conn = self.connect()
+        if conn is None:
+            return None
+        
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                SELECT CustomerID, FirstName, LastName, email, number
+                FROM ehicks12.customer
+                WHERE CustomerID = %s
+                """
+                cursor.execute(query, (customerID,))
+                result = cursor.fetchone()
+                return result
+        except pymysql.MySQLError as e:
+            print(f"Error getting customer by ID: {e}")
+            return None
+        
+        
+    def getEmployeeByID(self, employeerID):
+        conn = self.connect()
+        if conn is None:
+            return None
+        
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                SELECT EmployeeID, FirstName, LastName, Role, CompanyID
+                FROM ehicks12.Employee
+                WHERE employeeID = %s
+                """
+                cursor.execute(query, (employeerID,))
+                result = cursor.fetchone()
+                return result
+        except pymysql.MySQLError as e:
+            print(f"Error getting customer by ID: {e}")
+            return None
+    
+    def updateCustomer(self, customer_data):
+        conn = self.connect()
+        if conn is None:
+            return False
+        
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                UPDATE ehicks12.customer
+                SET FirstName = %s, LastName = %s, email = %s, number = %s
+                WHERE CustomerID = %s
+                """
+                cursor.execute(
+                    query,
+                    (
+                        customer_data["FirstName"],
+                        customer_data["LastName"],
+                        customer_data["email"],
+                        customer_data["number"],
+                        customer_data["CustomerID"]
+                    )
+                )
+            conn.commit()
+            return True
+        except pymysql.MySQLError as e:
+            print(f"Error updating customer: {e}")
+            return False
+        
+    def updateEmployee(self, employee_data):
+        conn = self.connect()
+        if conn is None:
+            return False
+        
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                UPDATE ehicks12.Employee
+                SET FirstName = %s, LastName = %s, Role = %s, CompanyID = %s
+                WHERE EmployeeID = %s
+                """
+                cursor.execute(
+                    query,
+                    (
+                        employee_data["FirstName"],
+                        employee_data["LastName"],
+                        employee_data["Role"],
+                        employee_data["CompanyID"],
+                        employee_data["EmployeeID"]
+                    )
+                )
+            conn.commit()
+            return True
+        except pymysql.MySQLError as e:
+            print(f"Error updating employee: {e}")
+            return False

@@ -65,39 +65,6 @@ def repairs():
 
     return render_template("repair.html", repairs=repairs_data, selected_status=status, all_statuses=all_statuses)
 
-@app.route("/employee", methods =["GET","POST"])
-def employee():
-    if request.method == "POST":
-        name_part = request.form.get("search", "")
-        employees = db.fetchSpecificEmployee(name_part)
-    else:
-        employees = db.list_all_employees()
-    return render_template("employee.html", employees=employees)
-
-@app.route("/customer", methods=["GET","POST"])
-def customer():
-    if request.method == "POST":
-        name_part = request.form.get("search", "")
-        customers = db.fetchSpecificCustomer(name_part)
-    else:
-        customers = db.listAllCustomers()
-
-    return render_template("customer.html", customers=customers)
-
-@app.route('/newCustomer', methods=["GET", "POST"])
-def newCustomer():
-    if request.method == "POST":
-        customer_id = request.form['customer_id']
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        email = request.form['email']
-        phone_number = request.form['phone_number']
-
-        success, message = db.addCustomer(customer_id, first_name, last_name, email, phone_number)
-        return render_template("newCustomer.html", message=message)
-
-    return render_template("newCustomer.html")
-
 
 @app.route("/sign", methods=["GET", "POST"])
 def sign():
@@ -156,6 +123,107 @@ def watches():
         all_watches = db.get_Watch_By_Price()
 
     return render_template("watches.html", watch=watch_data, message=message, all_watches=all_watches)
+
+
+@app.route("/editCustomer/<customerID>", methods=["GET", "POST"])
+def editCustomer(customerID):
+    message = None
+    
+    if request.method == "POST":
+        customer_data = {
+            "CustomerID": request.form.get("customerID"),
+            "FirstName": request.form.get("first_name"),
+            "LastName": request.form.get("last_name"),
+            "email": request.form.get("email"),
+            "number": request.form.get("phone_number")
+        }
+        
+        success = db.updateCustomer(customer_data)
+        if success:
+            message = "Customer updated successfully!"
+            return redirect(url_for('customer'))
+        else:
+            message = "Failed to update customer. Please try again."
+    
+    customer = db.getCustomerByID(customerID)
+    if not customer:
+        return redirect(url_for('customer'))
+    
+    return render_template("editCustomer.html", customer=customer, message=message)
+
+@app.route("/customer", methods=["GET","POST"])
+def customer():
+    if request.method == "POST":
+        if "deleteID" in request.form:
+            deleteID = request.form["deleteID"]
+            db.removeCustomer(deleteID)
+            customers = db.listAllCustomers()
+        elif "search" in request.form:
+            name_part = request.form.get("search", "")
+            customers = db.fetchSpecificCustomer(name_part)
+        else:
+            customers = db.listAllCustomers()
+    else:
+        customers = db.listAllCustomers()
+
+    return render_template("customer.html", customers=customers)
+
+@app.route("/employee", methods =["GET","POST"])
+def employee():
+    if request.method == "POST":
+        if "deleteID" in request.form:
+            deleteID = request.form["deleteID"]
+            db.removeEmployee(deleteID)
+            employees = db.list_all_employees()
+        elif "search" in request.form:
+            name_part = request.form.get("search", "")
+            employees = db.fetchSpecificEmployee(name_part)
+        else:
+            employees = db.list_all_employees()
+    else:
+        employees = db.list_all_employees()
+    return render_template("employee.html", employees=employees)
+
+@app.route("/editEmployee/<employeeID>", methods=["GET", "POST"])
+def editEmployee(employeeID):
+    message = None
+    
+    if request.method == "POST":
+        employee_data = {
+            "EmployeeID": request.form.get("employeeID"),
+            "FirstName": request.form.get("first_name"),
+            "LastName": request.form.get("last_name"),
+            "Role": request.form.get("role"),
+            "CompanyID": request.form.get("company_id")
+        }
+        
+        success = db.updateEmployee(employee_data)
+        if success:
+            message = "Employee updated successfully!"
+            return redirect(url_for('employee'))
+        else:
+            message = "Failed to update employee. Please try again."
+    
+    employee = db.getEmployeeByID(employeeID)    
+    if not employee:
+        return redirect(url_for('employee'))
+    
+    return render_template("editEmployee.html", employee=employee, message=message)
+
+@app.route('/newCustomer', methods=["GET", "POST"])
+def newCustomer():
+    if request.method == "POST":
+        customer_id = request.form['customer_id']
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        email = request.form['email']
+        phone_number = request.form['phone_number']
+
+        success, message = db.addCustomer(customer_id, first_name, last_name, email, phone_number)
+        return render_template("newCustomer.html", message=message)
+
+    return render_template("newCustomer.html")
+
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
