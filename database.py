@@ -56,7 +56,7 @@ class Database:
         try:
             with conn.cursor() as cursor:
                 query = """
-                SELECT CustomerID, FirstName, LastName, number
+                SELECT CustomerID, FirstName, LastName, email, number
                 From ehicks12.Customer
                 ORDER BY LastName
                 """
@@ -154,7 +154,7 @@ class Database:
         try:
             with conn.cursor() as cursor:
                 query = """
-                INSERT INTO ehicks12.customer (CustomerID, FirstName, LastName, email, number)
+                INSERT INTO ehicks12.Customer (CustomerID, FirstName, LastName, email, number)
                 VALUE (%s, %s, %s, %s, %s)
                 """
                 cursor.execute(query, (CustomerID, FirstName, LastName, email, number))
@@ -461,7 +461,7 @@ class Database:
         try:
             with conn.cursor() as cursor:
                 query = """
-                DELETE FROM ehicks12.customer WHERE CustomerID = %s
+                DELETE FROM ehicks12.Customer WHERE CustomerID = %s
                 """
                 cursor.execute(query, (CustomerID,))
                 conn.commit()
@@ -510,7 +510,7 @@ class Database:
             with conn.cursor() as cursor:
                 query = """
                 SELECT CustomerID, FirstName, LastName, email, number
-                FROM ehicks12.customer
+                FROM ehicks12.Customer
                 WHERE CustomerID = %s
                 """
                 cursor.execute(query, (customerID,))
@@ -548,7 +548,7 @@ class Database:
         try:
             with conn.cursor() as cursor:
                 query = """
-                UPDATE ehicks12.customer
+                UPDATE ehicks12.Customer
                 SET FirstName = %s, LastName = %s, email = %s, number = %s
                 WHERE CustomerID = %s
                 """
