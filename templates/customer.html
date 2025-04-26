@@ -52,12 +52,16 @@
         <form method="POST" action="/customer">
             <input type="text" name="search" value="{{ search or '' }}" placeholder="Search Name, ID, Number, or Email">
             <input type="submit" value="Search">
-            <button type="button" onclick="resetSearch()">Reset</button>
+            <button type="submit" onclick="resetSearch()">Reset</button>
             <a href="{{ url_for('newCustomer') }}">
             <button type="button">Add New Customer</button>
             </a>
         </form>
     </section>  
+
+    <div>
+        <nav class="divide"> <p>.</p> </nav>
+    </div>
 
     <!-- Customer Table -->
     <section class="customer-list">
